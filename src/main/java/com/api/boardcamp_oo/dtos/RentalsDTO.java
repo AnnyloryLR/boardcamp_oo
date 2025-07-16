@@ -11,7 +11,7 @@ import lombok.Data;
 public class RentalsDTO {
     
     @NotNull
-    private LocalDate renDate;
+    private LocalDate rentDate;
 
     @NotNull
     @Min(1)
@@ -24,4 +24,10 @@ public class RentalsDTO {
 
     @PositiveOrZero
     private Long delayFee;
+
+    @NotNull
+    private Long customerId;
+    
+    @NotNull    
+    private Long gameId;
 }
