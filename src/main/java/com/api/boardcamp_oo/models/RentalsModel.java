@@ -10,8 +10,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -48,12 +46,8 @@ public class RentalsModel {
     @JoinColumn(name = "customerId")
     private CustomersModel customer;
 
-    @ManyToMany
-    @JoinTable(
-        name = "rental-game",
-        joinColumns = @JoinColumn(name = "rentalId"),
-        inverseJoinColumns = @JoinColumn(name = "gameId")
-    )
+    @ManyToOne
+    @JoinColumn(name = "gameId")
     private GamesModel game;
 
     public RentalsModel(RentalsDTO dto, CustomersModel customer, GamesModel game){
