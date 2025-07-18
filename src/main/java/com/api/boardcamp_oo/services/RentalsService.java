@@ -1,10 +1,15 @@
 package com.api.boardcamp_oo.services;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 
 import com.api.boardcamp_oo.dtos.RentalsDTO;
 import com.api.boardcamp_oo.errors.CustomerNotFoundError;
 import com.api.boardcamp_oo.errors.GameNotFoundError;
+import com.api.boardcamp_oo.errors.RentalBadRequestError;
+import com.api.boardcamp_oo.errors.RentalNotFoundError;
+import com.api.boardcamp_oo.errors.RentalUnprocessableEntityError;
 import com.api.boardcamp_oo.models.CustomersModel;
 import com.api.boardcamp_oo.models.GamesModel;
 import com.api.boardcamp_oo.models.RentalsModel;
@@ -37,11 +42,40 @@ public class RentalsService {
             ()-> new CustomerNotFoundError("customer with the given id could not be found!")
         );
 
-        RentalsModel rental = new RentalsModel(body, customer, game);
-        return rentalsRepository.save(rental);
-        
+        RentalsModel newRental = new RentalsModel(body, customer, game);
+        return rentalsRepository.save(newRental);   
     }
 
-    
+    public RentalsModel finalizeRental(Long id){
+        RentalsModel rental = rentalsRepository.findById(id).orElseThrow(
+            () -> new RentalNotFoundError("rental with the ginven id was not found!")
+        );
 
+        if(rental.getReturnDate() != null){
+            throw new RentalUnprocessableEntityError("This rental has already been completed");
+        }
+
+        RentalsModel completedRental = new RentalsModel();
+            
+            completedRental.setId(rental.getId());
+            completedRental.setReturnDate(LocalDate.now());
+
+            Period period = rental.getRentDate().until(completedRental.getReturnDate());
+            
+            completedRental.setDelayFee(period.getDays() * rental.getGame().getPricePerDay());
+
+            return rentalsRepository.save(completedRental);
+    }
+
+    public void deleteRental(Long id){
+        RentalsModel rental = rentalsRepository.findById(id).orElseThrow(
+            () -> new RentalNotFoundError("rental with the ginven id was not found!")
+        );
+
+        if(rental.getReturnDate() == null){
+            throw new RentalBadRequestError("this rental has not been completed yet");
+        }
+
+        rentalsRepository.deleteById(id);
+    }
 }
