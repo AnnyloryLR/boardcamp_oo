@@ -3,6 +3,7 @@ package com.api.boardcamp_oo.services;
 import java.util.List;
 
 import com.api.boardcamp_oo.dtos.RentalsDTO;
+import com.api.boardcamp_oo.errors.CustomerNotFoundError;
 import com.api.boardcamp_oo.errors.GameNotFoundError;
 import com.api.boardcamp_oo.models.CustomersModel;
 import com.api.boardcamp_oo.models.GamesModel;
@@ -30,8 +31,17 @@ public class RentalsService {
 
     public RentalsModel createRental(RentalsDTO body){
         GamesModel game = gamesRepository.findById(body.getGameId()).orElseThrow(
-            ()-> new GameNotFoundError("a game with this id doesn't exist"));
-     
+            ()-> new GameNotFoundError("game with the given id doesn't exist"));
+        
+        CustomersModel customer = customersRepository.findById(body.getCustomerId()).orElseThrow(
+            ()-> new CustomerNotFoundError("customer with the given id could not be found!")
+        );
+
+        RentalsModel rental = new RentalsModel(body, customer, game);
+        return rentalsRepository.save(rental);
+        
     }
+
+    
 
 }

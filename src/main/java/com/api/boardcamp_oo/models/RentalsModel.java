@@ -37,10 +37,16 @@ public class RentalsModel {
     private LocalDate returnDate;
 
     @Column(nullable = false)
-    private Long originalPrice;
+    private Integer originalPrice;
 
     @Column(columnDefinition = "default Integer 0")
-    private Long delayFee;
+    private Integer delayFee;
+
+    @Column
+    private Long customerId;
+
+    @Column 
+    private Long gameId;
 
     @ManyToOne
     @JoinColumn(name = "customerId")
@@ -50,12 +56,19 @@ public class RentalsModel {
     @JoinColumn(name = "gameId")
     private GamesModel game;
 
-    public RentalsModel(RentalsDTO dto, CustomersModel customer, GamesModel game){
-        this.rentDate = dto.getRentDate();
+    public RentalsModel(RentalsDTO dto){
+        this.customerId = dto.getCustomerId();
+        this.gameId = dto.getGameId();
         this.daysRented = dto.getDaysRented();
-        this.returnDate = dto.getReturnDate();
-        this.originalPrice = dto.getOriginalPrice();
-        this.delayFee = dto.getDelayFee();
+        
+    }
+
+    public RentalsModel(RentalsDTO dto, CustomersModel customer, GamesModel game){
+        this.rentDate = LocalDate.now();
+        this.daysRented = dto.getDaysRented();
+        this.returnDate = null;
+        this.originalPrice = game.getPricePerDay() * dto.getDaysRented();
+        this.delayFee = 0;
         this.customer = customer;
         this.game = game;
     }

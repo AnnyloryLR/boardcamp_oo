@@ -20,14 +20,24 @@ public class RentalsDTO {
     private LocalDate returnDate;
 
     @NotNull
-    private Long originalPrice;
+    private Integer originalPrice;
 
     @PositiveOrZero
-    private Long delayFee;
+    private Integer delayFee;
 
     @NotNull
     private Long customerId;
     
     @NotNull    
     private Long gameId;
+
+    public Long getCustomerId(){
+        return customerId;
+    }
+
+    public Long getGameId(){
+        return gameId;
+    }
+
+
 }

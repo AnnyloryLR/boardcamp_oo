@@ -33,7 +33,7 @@ public class GamesModel {
     private Integer stockTotal;
 
     @Column(nullable = false)
-    private Integer  pricePerDay;
+    private Integer pricePerDay;
 
     public GamesModel(GamesDTO dto){
         this.name = dto.getName();
