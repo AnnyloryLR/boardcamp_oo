@@ -24,8 +24,10 @@ public class CustomersService {
     }
 
     public CustomersModel getCustomerById(Long id){
-        return customersRepository.findById(id).orElseThrow(
-            () -> new CustomerNotFoundError("customer with that id not found!"));
+        CustomersModel customer = customersRepository.findById(id).orElseThrow(
+            () -> new CustomerNotFoundError("customer not found!"));
+
+        return customer;
     }
 
     public CustomersModel createCustomer(CustomersDTO body){
