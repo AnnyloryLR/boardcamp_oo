@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.api.boardcamp_oo.dtos.CustomersDTO;
 import com.api.boardcamp_oo.models.CustomersModel;
 import com.api.boardcamp_oo.services.CustomersService;
-import com.api.boardcamp_oo.services.GamesService;
 
 import jakarta.validation.Valid;
 
@@ -23,18 +22,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("/customers")
 public class CustomersController {
 
-    final GamesService gamesService;
-
     final CustomersService customersService;
 
-    public CustomersController(CustomersService customersService, GamesService gamesService){
+    public CustomersController(CustomersService customersService){
         this.customersService = customersService;
-        this.gamesService = gamesService;
     }
     
     @GetMapping()
     public ResponseEntity<Object> getCustomers(){
-        return ResponseEntity.status(HttpStatus.OK).body(gamesService.getGames());
+        return ResponseEntity.status(HttpStatus.OK).body(customersService.getCustomers());
     }
 
     @GetMapping("/{id}")

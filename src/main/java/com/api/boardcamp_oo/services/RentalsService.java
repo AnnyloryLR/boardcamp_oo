@@ -66,14 +66,16 @@ public class RentalsService {
             throw new RentalUnprocessableEntityError("This rental has already been completed");
         }
 
+         Period period = rental.getRentDate().until(rental.getReturnDate());
+         Integer feeForDelay = period.getDays() * rental.getGame().getPricePerDay();
+
         RentalsModel completedRental = new RentalsModel();
-            
             completedRental.setId(rental.getId());
             completedRental.setReturnDate(LocalDate.now());
-
-            Period period = rental.getRentDate().until(completedRental.getReturnDate());
-            
-            completedRental.setDelayFee(period.getDays() * rental.getGame().getPricePerDay());
+            completedRental.setOriginalPrice(rental.getOriginalPrice());
+            completedRental.setDelayFee(feeForDelay);
+            completedRental.setCustomer(rental.getCustomer());
+            completedRental.setGame(rental.getGame());
 
             return rentalsRepository.save(completedRental);
     }

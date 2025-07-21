@@ -4,13 +4,11 @@ import java.time.LocalDate;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
 
 @Data
 public class RentalsDTO {
     
-    @NotNull
     private LocalDate rentDate;
 
     @NotNull
@@ -19,10 +17,8 @@ public class RentalsDTO {
 
     private LocalDate returnDate;
 
-    @NotNull
     private Integer originalPrice;
 
-    @PositiveOrZero
     private Integer delayFee;
 
     @NotNull

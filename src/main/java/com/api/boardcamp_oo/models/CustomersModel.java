@@ -27,7 +27,7 @@ public class CustomersModel {
     private String name;
 
     @Column(length = 11, nullable = false)
-    private Integer phone;
+    private String phone;
 
     @Column(length = 11, nullable = false, unique = true)
     private String cpf;
