@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("/customers")
 public class CustomersController {
 
-    private final GamesService gamesService;
+    final GamesService gamesService;
 
     final CustomersService customersService;
 

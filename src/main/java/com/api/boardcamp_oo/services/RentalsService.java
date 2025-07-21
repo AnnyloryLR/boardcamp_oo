@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.api.boardcamp_oo.dtos.RentalsDTO;
 import com.api.boardcamp_oo.errors.CustomerNotFoundError;
 import com.api.boardcamp_oo.errors.GameNotFoundError;
@@ -17,6 +19,7 @@ import com.api.boardcamp_oo.repositories.CustomersRepository;
 import com.api.boardcamp_oo.repositories.GamesRepository;
 import com.api.boardcamp_oo.repositories.RentalsRepository;
 
+@Service
 public class RentalsService {
     
     final RentalsRepository rentalsRepository;
@@ -42,7 +45,15 @@ public class RentalsService {
             ()-> new CustomerNotFoundError("customer with the given id could not be found!")
         );
 
+        Integer priceTotal = game.getPricePerDay() * body.getDaysRented();
+
         RentalsModel newRental = new RentalsModel(body, customer, game);
+            newRental.setRentDate(LocalDate.now());
+            newRental.setReturnDate(null);
+            newRental.setOriginalPrice(priceTotal);
+            newRental.setDelayFee(0);
+            newRental.setCustomer(customer);
+            newRental.setGame(game);
         return rentalsRepository.save(newRental);   
     }
 
