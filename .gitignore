@@ -1,3 +1,4 @@
+src/test/java/com/api/boardcamp_oo/resources/application-test.properties
 src/main/resources/application.properties
 HELP.md
 target/
