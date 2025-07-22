@@ -39,11 +39,17 @@ public class RentalsService {
 
     public RentalsModel createRental(RentalsDTO body){
         GamesModel game = gamesRepository.findById(body.getGameId()).orElseThrow(
-            ()-> new GameNotFoundError("game with the given id doesn't exist"));
+            ()-> new GameNotFoundError("game with the given id doesn't exist."));
         
         CustomersModel customer = customersRepository.findById(body.getCustomerId()).orElseThrow(
             ()-> new CustomerNotFoundError("customer with the given id could not be found!")
         );
+
+        Integer gamesWithOpenRental = rentalsRepository.findAllOpenRentalsByGameId(body.getGameId()).size();
+
+        if(gamesWithOpenRental >= game.getStockTotal()){
+            throw new RentalUnprocessableEntityError("no games with the given id available.");
+        }
 
         Integer priceTotal = game.getPricePerDay() * body.getDaysRented();
 
@@ -63,7 +69,7 @@ public class RentalsService {
         );
 
         if(rental.getReturnDate() != null){
-            throw new RentalUnprocessableEntityError("This rental has already been completed");
+            throw new RentalUnprocessableEntityError("This rental has already been completed.");
         }
 
          Period period = rental.getRentDate().until(LocalDate.now());
