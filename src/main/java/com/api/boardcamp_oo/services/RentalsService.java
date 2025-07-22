@@ -48,7 +48,7 @@ public class RentalsService {
         Integer gamesWithOpenRental = rentalsRepository.findAllOpenRentalsByGameId(body.getGameId()).size();
 
         if(gamesWithOpenRental >= game.getStockTotal()){
-            throw new RentalUnprocessableEntityError("no games with the given id available.");
+            throw new RentalUnprocessableEntityError("no games with the given id are available.");
         }
 
         Integer priceTotal = game.getPricePerDay() * body.getDaysRented();
