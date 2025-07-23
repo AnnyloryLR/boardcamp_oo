@@ -29,10 +29,9 @@ class GamesUnitTests {
     private GamesRepository gamesRepository;
     
     @Test
-    void givenGameWithSameName_whenCreatingGame_thenThrowError(){
+    void givenGameWithExistingName_whenCreatingGame_thenThrowError(){
       
         GamesDTO game = new GamesDTO("name", "image", 3, 1500); 
-
         doReturn(true).when(gamesRepository).existsByName(any());
 
         GameNameConflictError error = assertThrows(
