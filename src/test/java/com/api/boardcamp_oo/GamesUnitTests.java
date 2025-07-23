@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.api.boardcamp_oo.dtos.GamesDTO;
 import com.api.boardcamp_oo.errors.GameNameConflictError;
+import com.api.boardcamp_oo.models.GamesModel;
 import com.api.boardcamp_oo.repositories.GamesRepository;
 import com.api.boardcamp_oo.services.GamesService;
 
@@ -38,9 +39,25 @@ class GamesUnitTests {
             GameNameConflictError.class,
             () -> gamesService.createGame(game));
         
-        verify(gamesRepository, times(1) ).existsByName(any());
+        verify(gamesRepository, times(1)).existsByName(any());
+        verify(gamesRepository, times(0)).save(any());
         assertNotNull(error);
-        assertEquals("a game with that name already exists.", error.getMessage());
-        
+        assertEquals("a game with that name already exists.", error.getMessage()); 
+    }
+
+    @Test
+    void givenValidGame_whenCreatingGame_thenCreateGame(){
+
+        GamesDTO game = new GamesDTO("name", "image", 3, 1500);
+        GamesModel newGame = new GamesModel(game);
+
+        doReturn(false).when(gamesRepository).existsByName(any());
+        doReturn(newGame).when(gamesRepository).save(any());
+
+        GamesModel result = gamesService.createGame(game);
+
+        verify(gamesRepository, times(1)).existsByName(any());
+        verify(gamesRepository, times(1)).save(any());
+        assertEquals(newGame, result);
     }
 }
