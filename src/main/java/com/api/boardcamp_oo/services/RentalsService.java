@@ -45,7 +45,8 @@ public class RentalsService {
             ()-> new CustomerNotFoundError("customer with the given id could not be found!")
         );
 
-        Integer gamesWithOpenRental = rentalsRepository.findAllOpenRentalsByGameId(body.getGameId()).size();
+        List<RentalsModel> openRentals = rentalsRepository.getOpenRentalsByGameId(game.getId());
+        Integer gamesWithOpenRental = openRentals.size();
 
         if(gamesWithOpenRental >= game.getStockTotal()){
             throw new RentalUnprocessableEntityError("no games with the given id are available.");

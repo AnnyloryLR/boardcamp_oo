@@ -14,5 +14,5 @@ public interface RentalsRepository extends JpaRepository<RentalsModel, Long> {
         nativeQuery = true,
         value = "SELECT * FROM rentals WHERE game_id = :gameId AND return_date IS NULL;"
     )
-    List<RentalsModel> findAllOpenRentalsByGameId(Long gameId);
+    List<RentalsModel> getOpenRentalsByGameId(Long gameId);
 }    
