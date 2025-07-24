@@ -39,7 +39,7 @@ public class RentalsService {
 
     public RentalsModel createRental(RentalsDTO body){
         GamesModel game = gamesRepository.findById(body.getGameId()).orElseThrow(
-            ()-> new GameNotFoundError("game with the given id doesn't exist."));
+            ()-> new GameNotFoundError("game with the given id could not be found."));
         
         CustomersModel customer = customersRepository.findById(body.getCustomerId()).orElseThrow(
             ()-> new CustomerNotFoundError("customer with the given id could not be found!")

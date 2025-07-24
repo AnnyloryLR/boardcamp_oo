@@ -87,7 +87,7 @@ class RentalsUnitTests {
     }
 
     @Test
-    void GivenOpenRentalsEqualsToStockTotal_whenCreatingRental_thenThrowError(){
+    void givenOpenRentalsEqualsToStockTotal_whenCreatingRental_thenThrowError(){
         
         GamesDTO game = new GamesDTO("name", "image", 2, 1000);
         GamesModel existingGame = new GamesModel(game);
