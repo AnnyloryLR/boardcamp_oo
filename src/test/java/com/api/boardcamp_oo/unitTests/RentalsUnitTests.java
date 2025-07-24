@@ -95,7 +95,7 @@ class RentalsUnitTests {
         CustomersModel existingCustomer = new CustomersModel(customer);
         RentalsDTO rental = new RentalsDTO(LocalDate.now(), 3, null,
          4500, 0, 1L, 2L);
-        List<GamesModel> mockedList = mock(List.class);
+        List<RentalsModel> mockedList = mock(List.class);
         
         when(mockedList.size()).thenReturn(100);
         doReturn(Optional.of(existingGame)).when(gamesRepository).findById(any());
@@ -122,7 +122,7 @@ class RentalsUnitTests {
         RentalsDTO rental = new RentalsDTO(LocalDate.now(), 3, null,
          4500, 0, 1L, 2L);
         RentalsModel existingRental = new RentalsModel(rental, existingCustomer, existingGame);
-        List<GamesModel> mockedList = mock(List.class);
+        List<RentalsModel> mockedList = mock(List.class);
         
         when(mockedList.size()).thenReturn(0);
         doReturn(Optional.of(existingGame)).when(gamesRepository).findById(any());

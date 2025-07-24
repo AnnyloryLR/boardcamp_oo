@@ -25,7 +25,7 @@ public class CustomersService {
 
     public CustomersModel getCustomerById(Long id){
         CustomersModel customer = customersRepository.findById(id).orElseThrow(
-            () -> new CustomerNotFoundError("customer not found!"));
+            () -> new CustomerNotFoundError("customer was not found!"));
 
         return customer;
     }
