@@ -43,7 +43,7 @@ class CustomersUnitTests {
         verify(customersRepository, times(1)).findById(any());
         verify(customersRepository, times(0)).save(any());
         assertNotNull(error);
-        assertEquals("customer not found!", error.getMessage());
+        assertEquals("customer was not found!", error.getMessage());
     }
 
     @Test

@@ -63,7 +63,7 @@ class RentalsUnitTests {
         verify(gamesRepository, times(1)).findById(any());
         verify(rentalsRepository, times(0)).save(any());
         assertNotNull(error);
-        assertEquals("game with the given id doesn't exist.", error.getMessage());
+        assertEquals("game with the given id could not be found.", error.getMessage());
     }
 
     @Test
