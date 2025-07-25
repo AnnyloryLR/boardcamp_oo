@@ -74,7 +74,7 @@ public class RentalsService {
         }
 
          Period period = rental.getRentDate().until(LocalDate.now());
-         Integer feeForDelay = period.getDays() * rental.getGame().getPricePerDay();
+         Integer feeForDelay = (period.getDays() - rental.getDaysRented()) * rental.getGame().getPricePerDay();
 
         RentalsModel completedRental = new RentalsModel();
             completedRental.setId(rental.getId());
